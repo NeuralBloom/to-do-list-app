@@ -1,18 +1,22 @@
 function createTaskElement(taskText, dueDate, priority) {
     const newTask = document.createElement('li');
     newTask.draggable = true;
+    newTask.classList.add('task-item');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.classList.add('task-checkbox');
     checkbox.addEventListener('change', function() {
         newTask.classList.toggle('completed', checkbox.checked);
     });
 
     const taskContent = document.createElement('span');
+    taskContent.classList.add('task-content');
     taskContent.textContent = taskText;
 
     if (dueDate) {
         const dueDateElement = document.createElement('span');
+        dueDateElement.classList.add('due-date');
         dueDateElement.textContent = ` (Due: ${dueDate})`;
         if (new Date(dueDate) < new Date()) {
             newTask.classList.add('overdue');
@@ -20,7 +24,11 @@ function createTaskElement(taskText, dueDate, priority) {
         taskContent.appendChild(dueDateElement);
     }
 
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
     const editButton = document.createElement('button');
+    editButton.classList.add('edit-button');
     editButton.textContent = 'Edit';
     editButton.addEventListener('click', function() {
         const newText = prompt('Edit your task:', taskText);
@@ -33,15 +41,18 @@ function createTaskElement(taskText, dueDate, priority) {
     });
 
     const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', function() {
         newTask.remove();
     });
 
+    buttonContainer.appendChild(editButton);
+    buttonContainer.appendChild(deleteButton);
+
     newTask.appendChild(checkbox);
     newTask.appendChild(taskContent);
-    newTask.appendChild(editButton);
-    newTask.appendChild(deleteButton);
+    newTask.appendChild(buttonContainer);
 
     // Set the priority class
     if (priority) {
