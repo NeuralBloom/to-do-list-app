@@ -8,6 +8,7 @@ function createTaskElement(taskText, dueDate, priority) {
     checkbox.classList.add('task-checkbox');
     checkbox.addEventListener('change', function() {
         newTask.classList.toggle('completed', checkbox.checked);
+        saveTasks();
     });
 
     const taskContent = document.createElement('span');
@@ -37,6 +38,7 @@ function createTaskElement(taskText, dueDate, priority) {
             if (dueDate) {
                 taskContent.appendChild(dueDateElement);
             }
+            saveTasks();
         }
     });
 
@@ -45,6 +47,7 @@ function createTaskElement(taskText, dueDate, priority) {
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', function() {
         newTask.remove();
+        saveTasks();
     });
 
     buttonContainer.appendChild(editButton);
@@ -75,6 +78,7 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
         taskList.appendChild(createTaskElement(taskText, dueDate, priority));
         taskInput.value = '';
         dueDateInput.value = '';
+        saveTasks();
     }
 });
 
@@ -89,6 +93,7 @@ taskList.addEventListener('dragstart', function(e) {
 taskList.addEventListener('dragend', function(e) {
     if (e.target.tagName === 'LI') {
         e.target.classList.remove('dragging');
+        saveTasks();
     }
 });
 
@@ -118,3 +123,32 @@ function getDragAfterElement(container, y) {
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
+
+function saveTasks() {
+    const tasks = [];
+    document.querySelectorAll('.task-item').forEach(task => {
+        const taskText = task.querySelector('.task-content').textContent;
+        const isCompleted = task.classList.contains('completed');
+        const priority = task.classList.contains('high') ? 'high' : task.classList.contains('medium') ? 'medium' : 'low';
+        const dueDateElement = task.querySelector('.due-date');
+        const dueDate = dueDateElement ? dueDateElement.textContent.replace(' (Due: ', '').replace(')', '') : '';
+        tasks.push({ text: taskText, completed: isCompleted, priority, dueDate });
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(task => {
+        const taskList = document.getElementById('taskList');
+        const newTask = createTaskElement(task.text, task.dueDate, task.priority);
+        if (task.completed) {
+            newTask.classList.add('completed');
+            newTask.querySelector('.task-checkbox').checked = true;
+        }
+        taskList.appendChild(newTask);
+    });
+}
+
+// Load tasks from localStorage when the page loads
+window.addEventListener('load', loadTasks);
