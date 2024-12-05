@@ -14,36 +14,103 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 400px;
+    max-width: 90%;
 }
 
 #taskInput, #dueDateInput, #prioritySelect {
-    width: calc(100% - 50px);
-    padding: 5px;
+    width: calc(100% - 20px);
+    padding: 10px;
     margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
 }
 
 #addTaskButton {
-    padding: 6px 12px;
-    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#addTaskButton:hover {
+    background-color: #218838;
 }
 
 #taskList {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-#taskList li {
+.task-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: grab;
     transition: background-color 0.2s;
 }
 
-#taskList li.dragging {
+.task-item.dragging {
     opacity: 0.5;
+    background-color: #f1f1f1;
+}
+
+.task-checkbox {
+    margin-right: 10px;
+}
+
+.task-content {
+    flex: 1;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.due-date {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: #ffc107;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #e0a800;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
 }
 
 .completed {
@@ -53,35 +120,29 @@ body {
 
 .low {
     border-left: 4px solid green;
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 .medium {
     border-left: 4px solid orange;
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 .high {
     border-left: 4px solid red;
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 .overdue {
     color: red;
 }
 
-button {
-    margin-left: 10px;
-    padding: 5px;
-    cursor: pointer;
+#taskList li:hover {
+    background-color: #f9f9f9;
 }
 
 input[type="checkbox"] {
     margin-right: 10px;
-}
-
-#taskList li:hover {
-    background-color: #f9f9f9;
 }
 
 #taskList li span {
@@ -89,3 +150,21 @@ input[type="checkbox"] {
     margin-left: 10px;
 }
 
+@media (max-width: 600px) {
+    #app {
+        width: 100%;
+        padding: 15px;
+    }
+    #taskInput, #dueDateInput, #prioritySelect {
+        font-size: 0.9em;
+    }
+    #addTaskButton {
+        font-size: 0.9em;
+    }
+    .task-content {
+        font-size: 0.9em;
+    }
+    .edit-button, .delete-button {
+        font-size: 0.8em;
+    }
+}
