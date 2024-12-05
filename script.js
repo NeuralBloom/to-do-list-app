@@ -15,14 +15,13 @@ function createTaskElement(taskText, dueDate, priority) {
     taskContent.classList.add('task-content');
     taskContent.textContent = taskText;
 
+    const dueDateElement = document.createElement('span');
     if (dueDate) {
-        const dueDateElement = document.createElement('span');
         dueDateElement.classList.add('due-date');
         dueDateElement.textContent = ` (Due: ${dueDate})`;
         if (new Date(dueDate) < new Date()) {
             newTask.classList.add('overdue');
         }
-        taskContent.appendChild(dueDateElement);
     }
 
     const buttonContainer = document.createElement('div');
@@ -36,6 +35,7 @@ function createTaskElement(taskText, dueDate, priority) {
         if (newText !== null && newText.trim() !== '') {
             taskContent.textContent = newText.trim();
             if (dueDate) {
+                dueDateElement.textContent = ` (Due: ${dueDate})`;
                 taskContent.appendChild(dueDateElement);
             }
             saveTasks();
@@ -55,6 +55,9 @@ function createTaskElement(taskText, dueDate, priority) {
 
     newTask.appendChild(checkbox);
     newTask.appendChild(taskContent);
+    if (dueDate) {
+        newTask.appendChild(dueDateElement);
+    }
     newTask.appendChild(buttonContainer);
 
     // Set the priority class
