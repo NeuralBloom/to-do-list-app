@@ -13,10 +13,10 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
 }
 
-#taskInput {
+#taskInput, #dueDateInput, #prioritySelect {
     width: calc(100% - 50px);
     padding: 5px;
     margin-bottom: 10px;
@@ -24,6 +24,7 @@ body {
 
 #addTaskButton {
     padding: 6px 12px;
+    margin-bottom: 10px;
 }
 
 #taskList {
@@ -34,5 +35,57 @@ body {
 #taskList li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: grab;
+    transition: background-color 0.2s;
 }
+
+#taskList li.dragging {
+    opacity: 0.5;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.low {
+    border-left: 4px solid green;
+    padding-left: 5px;
+}
+
+.medium {
+    border-left: 4px solid orange;
+    padding-left: 5px;
+}
+
+.high {
+    border-left: 4px solid red;
+    padding-left: 5px;
+}
+
+.overdue {
+    color: red;
+}
+
+button {
+    margin-left: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#taskList li:hover {
+    background-color: #f9f9f9;
+}
+
+#taskList li span {
+    flex: 1;
+    margin-left: 10px;
+}
+
